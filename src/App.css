@@ -43,6 +43,9 @@ body {
 .refresh {
   width: 16.667px;
   height: 16.667px;
+  cursor: pointer;
+  margin-top: 5px;
+  opacity: 60%;
 }
 h4 {
   color: #fff;
@@ -77,6 +80,8 @@ h4 {
 }
 .clock-div {
   position: relative;
+  display: flex;
+  gap: 16px;
 }
 h1 {
   color: #fff;
@@ -95,9 +100,7 @@ h1 {
   font-weight: 300;
   line-height: 28px; /* 186.667% */
   text-transform: uppercase;
-  position: absolute;
-  top: 65px;
-  left: 270px;
+  margin-top: 66px;
 }
 .place {
   color: #fff;
@@ -120,11 +123,6 @@ button {
   align-items: center;
   padding: 17px 3px;
   margin-top: 48px;
-}
-.circle {
-  border-radius: 32px;
-  padding: 5px;
-  background: #303030;
 }
 .button-text {
   color: #000;
@@ -183,7 +181,7 @@ button {
   font-weight: 700;
   line-height: normal;
 }
-.night-text{
+.night-text {
   color: #fff;
 }
 hr {
@@ -209,6 +207,9 @@ span {
   .quote {
     font-size: 18px;
     line-height: 28px;
+  }
+  .refresh:hover {
+    opacity: 100%;
   }
   h4 {
     font-size: 18px;
@@ -237,8 +238,7 @@ span {
   }
   .BST {
     font-size: 32px;
-    top: 125px;
-    left: 470px;
+    margin-top: 125px;
   }
   .place {
     font-size: 18px;
@@ -250,9 +250,10 @@ span {
     padding: 8px 9px;
     margin-top: 80px;
     margin-bottom: 64px;
+    cursor: pointer;
   }
-  .circle {
-    padding: 10px;
+  button:hover .arrow {
+    opacity: 50%;
   }
   .button-text {
     font-size: 16px;
@@ -291,7 +292,7 @@ span {
     width: 40px;
   }
 }
-@media screen and (min-width: 1440px) {
+@media screen and (min-width: 1200px) {
   body {
     background-image: url(./assets/desktop/bg-image-daytime.jpg);
   }
@@ -325,8 +326,7 @@ span {
   }
   .BST {
     font-size: 40px;
-    top: 145px;
-    left: 500px;
+    margin-top: 145px;
   }
   .place {
     font-size: 24px;

@@ -14,9 +14,13 @@ function getWeekNumber(date: Date): number {
 }
 
 function App() {
+  const defaultQuote =
+    "“The science of operations, as derived from mathematics more especially, is a science of itself, and has its own abstract truth and value.”";
   const [information, setInformation] = useState(false);
   const [time, setTime] = useState(new Date());
   const [morningOrNight, setMorningOrNight] = useState(true);
+  const [quote, setQuote] = useState(defaultQuote);
+  const [author, setAuthor] = useState("Ada Lovelace");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -29,7 +33,7 @@ function App() {
       document.body.className = "";
     } else {
       setMorningOrNight(false);
-      document.body.style.backgroundColor = "night";
+      document.body.className = "night";
     }
 
     return () => clearInterval(interval);
@@ -67,6 +71,22 @@ function App() {
     return time.getDay();
   };
 
+  async function getRandomQuote() {
+    try {
+      const response = await fetch("https://api.quotable.io/random");
+      const data = await response.json();
+      return data;
+    } catch (error) {}
+  }
+  const fetchRandomQuote = async () => {
+    const randomQuote = await getRandomQuote();
+    setQuote(randomQuote.content);
+    setAuthor(randomQuote.author);
+  };
+
+  const handleRefresh = () => {
+    fetchRandomQuote();
+  };
   return (
     <div className="App">
       <div className="top-part">
@@ -75,14 +95,15 @@ function App() {
           style={information ? { display: "none" } : { display: "" }}
         >
           <div className="quote-div">
-            <p className="quote">
-              “The science of operations, as derived from mathematics more
-              especially, is a science of itself, and has its own abstract truth
-              and value.”
-            </p>
-            <img src={refresh} className="refresh" alt="refresh" />
+            <p className="quote">{quote}</p>
+            <img
+              src={refresh}
+              className="refresh"
+              alt="refresh"
+              onClick={handleRefresh}
+            />
           </div>
-          <h4>Ada Lovelace</h4>
+          <h4>{author}</h4>
         </div>
         <div
           className="time-button"
@@ -107,7 +128,7 @@ function App() {
           <button onClick={buttonClick}>
             <p className="button-text">MORE</p>
             <img
-              src={information ? arrowDown : arrowUp}
+              src={information ? arrowUp : arrowDown}
               alt="arrowDown"
               className="arrow"
             />
@@ -125,7 +146,7 @@ function App() {
             <p className={morningOrNight ? "name" : "name night-text"}>
               CURRENT TIMEZONE
             </p>
-            <p className={ morningOrNight?"data": "data night-text"}>
+            <p className={morningOrNight ? "data" : "data night-text"}>
               {getTimeZoneParts().area}/{getTimeZoneParts().location}
             </p>
           </div>
@@ -133,7 +154,9 @@ function App() {
             <p className={morningOrNight ? "name" : "name night-text"}>
               Day of the year
             </p>
-            <p className={ morningOrNight?"data": "data night-text"}>{getCurrentDayOfYear()}</p>
+            <p className={morningOrNight ? "data" : "data night-text"}>
+              {getCurrentDayOfYear()}
+            </p>
           </div>
         </div>
         <hr />
@@ -142,13 +165,17 @@ function App() {
             <p className={morningOrNight ? "name" : "name night-text"}>
               Day of the week
             </p>
-            <p className={ morningOrNight?"data": "data night-text"}>{getCurrentDayOfWeek()}</p>
+            <p className={morningOrNight ? "data" : "data night-text"}>
+              {getCurrentDayOfWeek()}
+            </p>
           </div>
           <div className="information">
             <p className={morningOrNight ? "name" : "name night-text"}>
               Week number
             </p>
-            <p className={ morningOrNight?"data": "data night-text"}>{getCurrentWeek()}</p>
+            <p className={morningOrNight ? "data" : "data night-text"}>
+              {getCurrentWeek()}
+            </p>
           </div>
         </div>
       </div>
